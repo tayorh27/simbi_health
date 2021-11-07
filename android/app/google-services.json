@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "867787367672",
+    "project_id": "simbi-health",
+    "storage_bucket": "simbi-health.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867787367672:android:54ca87d05bd2f09be3c70d",
+        "android_client_info": {
+          "package_name": "com.example.simbi_health"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "867787367672-7kiaqc4qfifratebns9j40o09b6dtkg0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC53O0OXAHWZNPWHLp56TXFMhdg5n787P8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "867787367672-7kiaqc4qfifratebns9j40o09b6dtkg0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
