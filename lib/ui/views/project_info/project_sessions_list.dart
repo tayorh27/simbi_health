@@ -5,9 +5,16 @@ import 'package:simbi_health/ui/shared/colors.dart';
 import 'package:simbi_health/ui/shared/styles.dart';
 import 'package:simbi_health/ui/widgets/session_card.dart';
 
-class ProjectSessionsList extends StatelessWidget {
+class ProjectSessionsList extends StatefulWidget {
   final FeaturedProjects? featuredProject;
   const ProjectSessionsList({Key? key, this.featuredProject}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _ProjectSessionsList();
+}
+
+class _ProjectSessionsList extends State<ProjectSessionsList> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +48,7 @@ class ProjectSessionsList extends StatelessWidget {
               children: [
                 Expanded(
                     child: Text(
-                  "${featuredProject!.projectTitle!}${featuredProject!.projectSubTitle}",
+                  "${widget.featuredProject!.projectTitle!}${widget.featuredProject!.projectSubTitle}",
                   style: headingTextStyle,
                 )),
               ],
@@ -65,7 +72,7 @@ class ProjectSessionsList extends StatelessWidget {
               height: 16.h,
             ),
             SessionCard(
-              featuredProject: featuredProject,
+              featuredProject: widget.featuredProject,
             )
           ],
         ),

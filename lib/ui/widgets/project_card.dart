@@ -5,7 +5,8 @@ import 'package:simbi_health/ui/shared/styles.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class ProjectCard extends StatelessWidget {
-  const ProjectCard({Key? key}) : super(key: key);
+  final String? progress, percent, duration, number, title;
+  const ProjectCard({Key? key, this.progress, this.percent, this.duration, this.number, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class ProjectCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                "Session Number",
+                "Session Number: $number",
                 style: customTextStyle(AppColors.whiteColor, 10.sp,
                     'helveticaNeueNormal', FontWeight.w400),
               )
@@ -36,7 +37,7 @@ class ProjectCard extends StatelessWidget {
             children: [
               Expanded(
                   child: Text(
-                "Common misconceptions and myths about mental health",
+                    (title == null) ? "Common misconceptions and myths about mental health" : title!,
                 style: TextStyle(
                     fontSize: 14,
                     color: AppColors.whiteColor,
@@ -60,7 +61,7 @@ class ProjectCard extends StatelessWidget {
                   color: Color.fromRGBO(14, 77, 164, 0.57),
                 ),
                 child: Text(
-                  "40 mins",
+                  (duration == null) ? "40 mins" : duration!,
                   style: customTextStyle(
                       Colors.white, 9, 'helveticaNeueNormal', FontWeight.w400),
                 ),
@@ -72,9 +73,9 @@ class ProjectCard extends StatelessWidget {
           ),
 
           StepProgressIndicator(
-            totalSteps: 10,
-            currentStep: 4,
-            size: 2,
+            totalSteps: 100,
+            currentStep: (percent == null) ? 4 : int.parse(percent!),
+            size: 1,
             padding: 0,
             selectedColor: AppColors.whiteColor,
             unselectedColor: Color.fromRGBO(255, 255, 255, 0.3),
@@ -88,7 +89,7 @@ class ProjectCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                "4/10",
+                (progress == null) ? "4/10" : progress!,
                 style: customTextStyle(AppColors.whiteColor, 9.sp,
                     'helveticaNeueNormal', FontWeight.w400),
               ),

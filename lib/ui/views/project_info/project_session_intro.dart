@@ -6,12 +6,22 @@ import 'package:simbi_health/ui/shared/colors.dart';
 import 'package:simbi_health/ui/shared/styles.dart';
 import 'package:simbi_health/ui/views/project_info/project_sessions_presentation.dart';
 import 'package:simbi_health/ui/widgets/reusable_widgets.dart';
+import 'package:simbi_health/utils/storage.dart';
 
-class ProjectSessionIntro extends StatelessWidget {
+class ProjectSessionIntro extends StatefulWidget {
   final FeaturedProjects? featuredProject;
+  final int? sessionIndex;
   final Session? session;
-  const ProjectSessionIntro({Key? key, this.featuredProject, this.session})
+  const ProjectSessionIntro({Key? key, this.featuredProject, this.session, this.sessionIndex})
       : super(key: key);
+  @override
+  State<StatefulWidget> createState() => _ProjectSessionIntro();
+}
+
+class _ProjectSessionIntro extends State<ProjectSessionIntro> {
+
+
+  StorageSystem ss = new StorageSystem();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +50,7 @@ class ProjectSessionIntro extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "Session ${session!.number!}",
+                    "Session ${widget.session!.number!}",
                     style: activityTitleTextStyle,
                   ),
                 ],
@@ -52,7 +62,7 @@ class ProjectSessionIntro extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.h),
               child: Text(
-                '${session!.title}',
+                '${widget.session!.title}',
                 style: customTextStyle(AppColors.blackColor, 18.sp,
                     'helveticaNeueNormal', FontWeight.w700),
               ),
@@ -66,7 +76,7 @@ class ProjectSessionIntro extends StatelessWidget {
                 height: 218.h,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("${session!.sessionImage}"),
+                        image: AssetImage("${widget.session!.sessionImage}"),
                         fit: BoxFit.cover)),
                 child: Center(
                   child: InkWell(
@@ -101,13 +111,18 @@ class ProjectSessionIntro extends StatelessWidget {
                   ),
                   customElevatedButton(
                       text: "Skip",
-                      onPress: () {
+                      onPress: () async {
+                        await ss.setPrefItem("current_featured_project", widget.featuredProject!.id!, isStoreOnline: false);
+                        await ss.setPrefItem("${widget.featuredProject!.id!}", "init");
+                        // ss.setPrefItem("current_session_pr", widget.featuredProject!.id!, isStoreOnline: false);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
                                     ProjectSessionsPresentation(
-                                      session: session,
+                                      session: widget.session,
+                                        sessionIndex: widget.sessionIndex,
+                                      featuredProjects: widget.featuredProject,
                                     )));
                       },
                       textColor: AppColors.whiteColor)

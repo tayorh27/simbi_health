@@ -6,21 +6,76 @@ import 'package:simbi_health/data/models/featured_projects.dart';
 import 'package:simbi_health/ui/shared/colors.dart';
 import 'package:simbi_health/ui/shared/styles.dart';
 import 'package:simbi_health/ui/views/project_info/project_session_intro.dart';
+import 'package:simbi_health/utils/storage.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 
-class SessionCard extends StatelessWidget {
+class SessionCard extends StatefulWidget {
   final FeaturedProjects? featuredProject;
   const SessionCard({Key? key, this.featuredProject}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _SessionCard();
+}
+
+class _SessionCard extends State<SessionCard> {
+
+  StorageSystem ss = new StorageSystem();
+  String continuedProjectId = "";
+  List<String> sessionsDone = [];
+  List<double> percentDone = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getContinuedProjectData();
+  }
+
+  getContinuedProjectData() async {
+    String a = await ss.getItem("${widget.featuredProject!.id}") ?? "";
+    setState(() {
+      continuedProjectId = a;
+    });
+    // await ss.setPrefItem("${currentFPId}_session_${widget.sessionIndex}", "done", isStoreOnline: false);
+
+    if(a == "init") {
+      for(int i = 0; i < widget.featuredProject!.sessions!.length; i++) {
+        String value = await ss.getItem("${widget.featuredProject!.id}_session_$i") ?? "locked";
+        String percent = await ss.getItem("${widget.featuredProject!.id}_percent_$i") ?? "0";
+        setState(() {
+          sessionsDone.add(value);
+          percentDone.add(double.parse(percent));
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ListView.builder(
-        itemCount: featuredProject!.sessions!.length,
+        itemCount: widget.featuredProject!.sessions!.length,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          final session = featuredProject!.sessions![index];
+          final session = widget.featuredProject!.sessions![index];
+          bool isLocked = true;
+          double completePercent = 0;
+
+          if(index == 0) {
+            isLocked = false;
+          }
+
+          if(index > 0) {
+            if(sessionsDone.isNotEmpty && sessionsDone.length == widget.featuredProject!.sessions!.length) {
+              if(sessionsDone[index] == "done" || sessionsDone[index] == "next") {
+                isLocked = false;
+                completePercent = percentDone[index];
+              }
+            }
+          }
+
           return Padding(
             padding: EdgeInsets.only(bottom: 9),
             child: InkWell(
@@ -34,7 +89,7 @@ class SessionCard extends StatelessWidget {
                 ),
                 child: InkWell(
                   onTap: () {
-                    if (session.isLocked!) {
+                    if (isLocked) {
                       Fluttertoast.showToast(
                           msg: "Session locked",
                           toastLength: Toast.LENGTH_LONG,
@@ -47,8 +102,8 @@ class SessionCard extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => ProjectSessionIntro(
-                                    featuredProject: featuredProject,
-                                    session: session,
+                                    featuredProject: widget.featuredProject,
+                                    session: session, sessionIndex: index
                                   )));
                     }
                   },
@@ -60,7 +115,7 @@ class SessionCard extends StatelessWidget {
                           EdgeInsets.only(left: 23.h, top: 11.h, right: 8.h),
                       child: Stack(
                         children: [
-                          if (index > 0 && session.isLocked!)
+                          if (index > 0 && isLocked)
                             Positioned(
                                 top: 40.h,
                                 left: 55.w,
@@ -74,7 +129,7 @@ class SessionCard extends StatelessWidget {
                                       iconSize: 35,
                                     ),
                                     Text(
-                                      "Complete session ${featuredProject!.sessions![index - 1].number} to unlock",
+                                      "Complete session ${widget.featuredProject!.sessions![index - 1].number} to unlock",
                                       style: customTextStyle(
                                           AppColors.whiteColor,
                                           10,
@@ -83,7 +138,7 @@ class SessionCard extends StatelessWidget {
                                     ),
                                     SizedBox(height: 5.h),
                                     Text(
-                                      "unlock ${session.number}",
+                                      "session ${session.number}",
                                       style: customTextStyle(
                                           AppColors.whiteColor,
                                           10,
@@ -102,19 +157,19 @@ class SessionCard extends StatelessWidget {
                                   Text(
                                     '${session.number}',
                                     style: customTextStyle(
-                                        session.isLocked!
+                                        isLocked
                                             ? Colors.white12
                                             : AppColors.whiteColor,
                                         10,
                                         'helveticaNeueNormal',
                                         FontWeight.w400),
                                   ),
-                                  if (!session.isLocked!)
-                                    Icon(
-                                      Icons.bookmark_add,
-                                      size: 20,
-                                      color: AppColors.whiteColor,
-                                    )
+                                  // if (!session.isLocked!)
+                                  //   Icon(
+                                  //     Icons.bookmark_add,
+                                  //     size: 20,
+                                  //     color: AppColors.whiteColor,
+                                  //   )
                                 ],
                               ),
                               SizedBox(
@@ -126,7 +181,7 @@ class SessionCard extends StatelessWidget {
                                       child: Text(
                                     '${session.title}',
                                     style: customTextStyle(
-                                        session.isLocked!
+                                        isLocked
                                             ? Colors.white12
                                             : AppColors.whiteColor,
                                         14,
@@ -146,7 +201,7 @@ class SessionCard extends StatelessWidget {
                                     color: Colors.black26),
                                 child: Text("${session.duration} mins",
                                     style: customTextStyle(
-                                        session.isLocked!
+                                        isLocked
                                             ? Colors.white12
                                             : AppColors.whiteColor,
                                         9,
@@ -157,16 +212,21 @@ class SessionCard extends StatelessWidget {
                               SizedBox(
                                 height: 11.h,
                               ),
-                              if (!session.isLocked!)
-                                LinearProgressIndicator(
-                                  backgroundColor: session.isLocked!
-                                      ? Colors.white12
-                                      : AppColors.whiteColor,
-                                  value: 1,
-                                  color: session.isLocked!
-                                      ? Colors.white12
-                                      : AppColors.whiteColor,
+                              if (!isLocked)
+                                StepProgressIndicator(
+                                  totalSteps: 100,
+                                  currentStep: completePercent.toInt(),
+                                  size: 1,
+                                  padding: 0,
+                                  selectedColor: Colors.black,
+                                  unselectedColor: AppColors.whiteColor,
+                                  roundedEdges: Radius.circular(10),
                                 )
+                                // LinearProgressIndicator(
+                                //   backgroundColor: AppColors.whiteColor,
+                                //   value: completePercent,
+                                //   color: Colors.lightGreenAccent,
+                                // )
                             ],
                           ),
                         ],

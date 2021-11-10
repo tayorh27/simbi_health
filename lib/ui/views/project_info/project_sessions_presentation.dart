@@ -10,11 +10,14 @@ import 'package:simbi_health/ui/widgets/final_question_dialog.dart';
 import 'package:simbi_health/ui/widgets/question_dialog.dart';
 import 'package:simbi_health/ui/widgets/show_result_dialog.dart';
 import 'package:simbi_health/ui/widgets/top_icon_widget.dart';
+import 'package:simbi_health/utils/storage.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class ProjectSessionsPresentation extends StatefulWidget {
   final Session? session;
-  const ProjectSessionsPresentation({Key? key, this.session}) : super(key: key);
+  final int? sessionIndex;
+  final FeaturedProjects? featuredProjects;
+  const ProjectSessionsPresentation({Key? key, this.session, this.sessionIndex, this.featuredProjects}) : super(key: key);
 
   @override
   State<ProjectSessionsPresentation> createState() =>
@@ -29,6 +32,7 @@ class _ProjectSessionsPresentationState
 
   bool complete = false;
 
+  StorageSystem ss = new StorageSystem();
 
 
   List<Presentation>? presentations;
@@ -53,14 +57,14 @@ class _ProjectSessionsPresentationState
           icon: Icon(Icons.arrow_back_ios),
           color: AppColors.blackColor,
         ),
-        actions: [
-          Icon(Icons.bookmark_sharp, color: AppColors.blackColor),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.volume_off),
-            color: AppColors.blackColor,
-          )
-        ],
+        // actions: [
+        //   Icon(Icons.bookmark_sharp, color: AppColors.blackColor),
+        //   IconButton(
+        //     onPressed: () {},
+        //     icon: Icon(Icons.volume_off),
+        //     color: AppColors.blackColor,
+        //   )
+        // ],
       ),
       body: SafeArea(
           child: SingleChildScrollView(
@@ -344,8 +348,24 @@ class _ProjectSessionsPresentationState
 
                 _currentIndex == totalSteps - 1
                     ? InkWell(
-                  onTap: (){
-                    complete ? Navigator.push(context, MaterialPageRoute(builder: (context) => NavScreen())) :showFinalOptionDialog(context);
+                  onTap: () async {
+                    if(complete) {
+                      // int currentSessionIndex = widget.sessionIndex!;
+                      String? currentFPId = widget.featuredProjects!.id;//await ss.getItem("current_featured_project");
+                      // final fp = featuredProjects.firstWhere((element) => element.id == currentFPId);
+                      // if(currentSessionIndex < fp.sessions!.length) {
+                      //   final newSession = fp.sessions
+                      //
+                      // }
+                      await ss.setPrefItem("${widget.featuredProjects!.id}_percent_${widget.sessionIndex}", "100", isStoreOnline: false);
+                      await ss.setPrefItem("current_featured_project", "", isStoreOnline: false);
+                      await ss.setPrefItem("${currentFPId}_session_${widget.sessionIndex}", "done", isStoreOnline: false);
+                      await ss.setPrefItem("${currentFPId}_session_${(widget.sessionIndex! + 1)}", "next", isStoreOnline: false);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => NavScreen()));
+                      return;
+                    }
+                    showFinalOptionDialog(context);
+                    // complete ? Navigator.push(context, MaterialPageRoute(builder: (context) => NavScreen())) :showFinalOptionDialog(context);
                   },
                   child: complete ? Container(width: 131.w,
                   height: 48.h,
@@ -432,7 +452,7 @@ class _ProjectSessionsPresentationState
     });
   }
 
-  void _next() {
+  void _next() async {
     if (_currentIndex == 3) {
       showOptionDialog(context);
     } else if (_currentIndex == 5) {
@@ -441,6 +461,14 @@ class _ProjectSessionsPresentationState
       setState(() {
         _currentIndex += 1;
       });
+      int percent = ((_currentIndex + 1) / (totalSteps) * 100).toInt();
+      await ss.setPrefItem("current_featured_project_progress", "${(_currentIndex + 1)}/$totalSteps", isStoreOnline: false);
+      await ss.setPrefItem("${widget.featuredProjects!.id}_percent_${widget.sessionIndex}", "$percent", isStoreOnline: false);
+      await ss.setPrefItem("current_featured_project_percent", "$percent", isStoreOnline: false);
+      await ss.setPrefItem("current_featured_project_duration", "${widget.session!.duration} mins", isStoreOnline: false);
+      await ss.setPrefItem("current_featured_project_number", "${widget.session!.number}", isStoreOnline: false);
+      await ss.setPrefItem("current_featured_project_title", "${widget.session!.title}", isStoreOnline: false);
+      await ss.setPrefItem("current_session_index", "${widget.sessionIndex}", isStoreOnline: false);
     }
   }
 

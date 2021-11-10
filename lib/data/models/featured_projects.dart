@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simbi_health/ui/shared/colors.dart';
 
 class FeaturedProjects {
+  final String? id;
   final String? projectTitle;
   final String? projectSubTitle;
   final String? about;
@@ -17,7 +18,8 @@ class FeaturedProjects {
   final List<Session>? sessions;
 
   const FeaturedProjects(
-      {this.projectTitle,
+      {this.id,
+        this.projectTitle,
       this.projectSubTitle,
       this.language,
       this.image,
@@ -103,6 +105,7 @@ final List<String>? images = [
 
 final List<FeaturedProjects> featuredProjects = [
   FeaturedProjects(
+      id: "fp_1",
       projectTitle: "Brave",
       projectSubTitle: "Heart",
       language: "Hausa",
@@ -1161,6 +1164,7 @@ final List<FeaturedProjects> featuredProjects = [
     ],
   ),
   FeaturedProjects(
+    id: "fp_2",
       projectTitle: "Brave",
       projectSubTitle: "Heart",
       language: "Hausa",
@@ -2220,6 +2224,7 @@ final List<FeaturedProjects> featuredProjects = [
     ],
   ),
   FeaturedProjects(
+    id: "fp_3",
       projectTitle: "Brave",
       projectSubTitle: "Heart",
       language: "Hausa",
@@ -3279,6 +3284,7 @@ final List<FeaturedProjects> featuredProjects = [
     ],
   ),
   FeaturedProjects(
+    id: "fp_4",
       projectTitle: "Brave",
       projectSubTitle: "Heart",
       language: "French",
@@ -4338,6 +4344,7 @@ final List<FeaturedProjects> featuredProjects = [
     ],
   ),
   FeaturedProjects(
+    id: "fp_5",
       projectTitle: "Brave",
       projectSubTitle: "Heart",
       language: "Hausa",
@@ -5397,6 +5404,7 @@ final List<FeaturedProjects> featuredProjects = [
     ],
   ),
   FeaturedProjects(
+    id: "fp_6",
       projectTitle: "Brave",
       projectSubTitle: "Heart",
       language: "English",
@@ -6456,6 +6464,7 @@ final List<FeaturedProjects> featuredProjects = [
     ],
   ),
   FeaturedProjects(
+    id: "fp_7",
       projectTitle: "Brave",
       projectSubTitle: "Heart",
       language: "Hausa",
@@ -7448,6 +7457,7 @@ final List<FeaturedProjects> featuredProjects = [
     ],
   ),
   FeaturedProjects(
+    id: "fp_8",
       projectTitle: "Brave",
       projectSubTitle: "Heart",
       language: "English",
