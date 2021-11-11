@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simbi_health/data/models/featured_projects.dart';
 import 'package:simbi_health/ui/shared/colors.dart';
 import 'package:simbi_health/ui/shared/styles.dart';
+import 'package:simbi_health/ui/views/video_player/youtube_video_player.dart';
 
 class ProjectVideos extends StatelessWidget {
   final FeaturedProjects? featuredProject;
@@ -14,7 +15,7 @@ class ProjectVideos extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: 233,
+              height: 250,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                   color: Colors.black26,
@@ -51,7 +52,7 @@ class ProjectVideos extends StatelessWidget {
                             height: 3,
                           ),
                           Container(
-                            height: 20,
+                            height: 30,
                             decoration: BoxDecoration(
                                 color: Color.fromRGBO(255, 255, 255, 0.3),
                                 borderRadius: BorderRadius.circular(5)),
@@ -117,7 +118,14 @@ class ProjectVideos extends StatelessWidget {
                                             left: 50,
                                             top: 40,
                                             child: IconButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => YoutubeVideoPlayer(
+                                                          youTubeLink: video.link,
+                                                        )));
+                                              },
                                               icon: Icon(
                                                   Icons.play_circle_outline),
                                               iconSize: 35,

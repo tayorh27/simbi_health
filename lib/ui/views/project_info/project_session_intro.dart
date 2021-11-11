@@ -78,15 +78,15 @@ class _ProjectSessionIntro extends State<ProjectSessionIntro> {
                     image: DecorationImage(
                         image: AssetImage("${widget.session!.sessionImage}"),
                         fit: BoxFit.cover)),
-                child: Center(
-                  child: InkWell(
-                      onTap: () {},
-                      child: Icon(
-                        Icons.play_circle_outline,
-                        size: 50,
-                        color: Colors.white,
-                      )),
-                ),
+                // child: Center(
+                //   child: InkWell(
+                //       onTap: () {},
+                //       child: Icon(
+                //         Icons.play_circle_outline,
+                //         size: 50,
+                //         color: Colors.white,
+                //       )),
+                // ),
               ),
             ),
             SizedBox(

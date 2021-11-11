@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">867787367672-7kiaqc4qfifratebns9j40o09b6dtkg0.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">867787367672</string>
+    <string name="google_api_key" translatable="false">AIzaSyC53O0OXAHWZNPWHLp56TXFMhdg5n787P8</string>
+    <string name="google_app_id" translatable="false">1:867787367672:android:54ca87d05bd2f09be3c70d</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyC53O0OXAHWZNPWHLp56TXFMhdg5n787P8</string>
+    <string name="google_storage_bucket" translatable="false">simbi-health.appspot.com</string>
+    <string name="project_id" translatable="false">simbi-health</string>
+</resources>

@@ -65,6 +65,11 @@ class _SessionCard extends State<SessionCard> {
 
           if(index == 0) {
             isLocked = false;
+            if(sessionsDone.length > 0) {
+              if(sessionsDone[0] == "done") {
+                completePercent = percentDone[0];
+              }
+            }
           }
 
           if(index > 0) {

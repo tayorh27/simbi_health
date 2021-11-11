@@ -540,6 +540,6 @@ class _ProjectSessionsPresentationState
     showDialog(
         context: context,
         builder: (BuildContext context) =>
-            ShowResultDialogDialog());
+            ShowResultDialogDialog(projectSession: widget.session));
   }
 }

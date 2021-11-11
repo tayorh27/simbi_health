@@ -5,8 +5,15 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:simbi_health/ui/shared/colors.dart';
 import 'package:simbi_health/ui/shared/styles.dart';
+import 'package:simbi_health/ui/views/certificate/certificate.dart';
+
+import 'package:simbi_health/data/models/featured_projects.dart';
 
 class ShowResultDialogDialog extends StatefulWidget {
+
+  final Session? projectSession;
+  const ShowResultDialogDialog({Key? key, this.projectSession}) : super(key: key);
+
   @override
   _ShowResultDialogDialogState createState() => _ShowResultDialogDialogState();
 }
@@ -51,9 +58,9 @@ class _ShowResultDialogDialogState extends State<ShowResultDialogDialog> {
 
             Container(height: 145.h,
             padding: EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(236, 244, 255, 1)
-            ),
+            // decoration: BoxDecoration(
+            //   color: Color.fromRGBO(236, 244, 255, 1)
+            // ),
               child: Column(
                 children: [
                   SizedBox(height: 13.h,),
@@ -63,71 +70,76 @@ class _ShowResultDialogDialogState extends State<ShowResultDialogDialog> {
 
                   InkWell(
                     onTap: (){
-                      
+    Navigator.push(
+    context,
+    MaterialPageRoute(
+    builder: (context) => ViewCertificate(
+      projectSession: widget.projectSession,
+    )));
                     },
                     child: Text("View your certificate", style: customTextStyle(AppColors.yellowColor, 14.sp, 'helveticaNeueNormal', FontWeight.w700)),
 
                   ),
 
-                  SizedBox(height: 33.h,),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Download certificate", style: customTextStyle(AppColors.yellowColor, 14.sp, 'helveticaNeueNormal', FontWeight.w700)),
-                      SizedBox(width: 5.w,),
-                      
-                      Icon(Icons.keyboard_arrow_down, color: AppColors.yellowColor,)
-                    ],
-                  ),
+                  // SizedBox(height: 33.h,),
+                  //
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Text("Download certificate", style: customTextStyle(AppColors.yellowColor, 14.sp, 'helveticaNeueNormal', FontWeight.w700)),
+                  //     SizedBox(width: 5.w,),
+                  //
+                  //     Icon(Icons.keyboard_arrow_down, color: AppColors.yellowColor,)
+                  //   ],
+                  // ),
                 ],
               ),
             ),
 
             SizedBox(height: 9.h,),
 
-            Text('Share your certificate on', style: customTextStyle(AppColors.blackColor, 12.sp, 'helveticaNeueNormal', FontWeight.w700)),
+            // Text('Share your certificate on', style: customTextStyle(AppColors.blackColor, 12.sp, 'helveticaNeueNormal', FontWeight.w700)),
+            //
+            // SizedBox(height: 37.h,),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Container(
+            //       height: 28.h,
+            //       width: 28.w,
+            //       decoration: BoxDecoration(
+            //         color: Colors.blue,
+            //         borderRadius: BorderRadius.circular(100),
+            //       ),
+            //       child: Image.asset("assets/images/twitter.png"),
+            //     ),
+            //
+            //     SizedBox(width: 34.w,),
+            //
+            //     Container(
+            //       height: 28.h,
+            //       width: 28.w,
+            //       decoration: BoxDecoration(
+            //         color: Colors.blue,
+            //         borderRadius: BorderRadius.circular(100),
+            //       ),
+            //       child: Image.asset("assets/images/instagram.png"),
+            //     ),
+            //
+            //     SizedBox(width: 34.w,),
+            //
+            //     Container(
+            //       height: 28.h,
+            //       width: 28.w,
+            //       decoration: BoxDecoration(
+            //         color: Colors.blue,
+            //         borderRadius: BorderRadius.circular(100),
+            //       ),
+            //       child: Image.asset("assets/images/fb.png"),
+            //     )
+            // ],),
 
-            SizedBox(height: 37.h,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 28.h,
-                  width: 28.w,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: Image.asset("assets/images/twitter.png"),
-                ),
-
-                SizedBox(width: 34.w,),
-
-                Container(
-                  height: 28.h,
-                  width: 28.w,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: Image.asset("assets/images/instagram.png"),
-                ),
-
-                SizedBox(width: 34.w,),
-
-                Container(
-                  height: 28.h,
-                  width: 28.w,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: Image.asset("assets/images/fb.png"),
-                )
-            ],),
-
-            SizedBox(height: 53.h,)
+            // SizedBox(height: 53.h,)
           ],
         ),
       ),

@@ -40,9 +40,10 @@ class ProjectsVideo {
   final String? yearUploaded;
   final String? duration;
   final String? image;
+  final String? link;
 
   const ProjectsVideo(
-      {this.projectTitle, this.yearUploaded, this.image, this.duration});
+      {this.projectTitle, this.yearUploaded, this.image, this.duration, this.link = "https://www.youtube.com/watch?v=BBAyRBTfsOU"});
 }
 
 class Session {
