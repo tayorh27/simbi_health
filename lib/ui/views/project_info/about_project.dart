@@ -16,7 +16,7 @@ class AboutProject extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: 233,
+              height: 250,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                   color: Colors.black26,
@@ -53,7 +53,7 @@ class AboutProject extends StatelessWidget {
                             height: 3,
                           ),
                           Container(
-                            height: 20,
+                            height: 30,
                             decoration: BoxDecoration(
                                 color: Color.fromRGBO(255, 255, 255, 0.3),
                                 borderRadius: BorderRadius.circular(5)),

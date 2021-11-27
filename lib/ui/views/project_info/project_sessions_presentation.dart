@@ -531,7 +531,11 @@ class _ProjectSessionsPresentationState
       setState(() {
         complete = true;
       });
-
+      String? currentFPId = widget.featuredProjects!.id;
+      await ss.setPrefItem("${widget.featuredProjects!.id}_percent_${widget.sessionIndex}", "100", isStoreOnline: false);
+      await ss.setPrefItem("current_featured_project", "", isStoreOnline: false);
+      await ss.setPrefItem("${currentFPId}_session_${widget.sessionIndex}", "done", isStoreOnline: false);
+      await ss.setPrefItem("${currentFPId}_session_${(widget.sessionIndex! + 1)}", "next", isStoreOnline: false);
       showResultDialog(context);
     }
   }

@@ -147,7 +147,7 @@ class ProjectVideos extends StatelessWidget {
                                               padding:
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 18,
-                                                      vertical: 5),
+                                                      vertical: 2),
                                               child: Text(
                                                 video.duration!,
                                                 style: customTextStyle(

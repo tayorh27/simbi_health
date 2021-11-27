@@ -78,7 +78,7 @@ class _ViewCertificate extends State<ViewCertificate> {
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage(
-                                          "assets/images/certificate.png")))),
+                                          "assets/images/my_certificate.png")))),
                           Positioned(
                               child: Text(
                                   "${user!["firstname"]} ${user!["lastname"]}",
